@@ -1,0 +1,34 @@
+from django.urls import path, include
+from usuario import views 
+from django.contrib import admin
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('login/', views.login, name='login'),
+    path('registro/', views.registro, name='registro'),
+    path('passagens/', views.passagens, name='passagens'),
+    path('hospedagens/', views.hospedagens, name='hospedagens'),
+    path('promocoes/', views.promocoes, name='promocoes'),
+    path('auth/', include('usuario.urls')),
+    path('admin/', admin.site.urls),
+    path('perfil/', views.perfil, name='perfil'),
+    path('perfilvoo/', views.perfilvoo, name='perfilvoo'),
+    path('perfilhotel/', views.perfilhotel, name='perfilhotel'),
+    path('perfilgeral/', views.perfilgeral, name='perfilgeral'),
+    path('cadastro_hotel/', views.cadastro_hotel, name='cadastro_hotel'),
+    path('cadastro_quarto/', views.cadastro_quarto, name='cadastro_quarto'),
+    path('cadastro_voo/', views.cadastro_voo, name='cadastro_voo'),
+    path('cadastro_companhia/', views.cadastro_companhia, name='cadastro_companhia'),
+    path('cadastro_cidades/', views.cadastro_cidades, name='cadastro_cidades'),
+    path('cadastro_aeroportos/', views.cadastro_aeroportos, name='cadastro_aeroportos'),
+    path('logout/', views.logout, name='logout'),
+    path('homeadm/', views.homeadm, name='homeadm'),
+    path('homeadmhotel/', views.homeadmhotel, name='homeadmhotel'),
+    path('homeadmvoo/', views.homeadmvoo, name='homeadmvoo'),
+    path('visualizar_hotel/', views.visualizar_hotel, name='visualizar_hotel'),
+    path('visualizar_companhia/', views.visualizar_companhia, name='visualizar_companhia'),
+    path('visualizar_cidades/', views.visualizar_cidades, name='visualizar_cidades'),
+    path('visualizar_aeroportos/', views.visualizar_aeroportos, name='visualizar_aeroportos'),
+    path('visualizar_quarto/', views.visualizar_quarto, name='visualizar_quarto'),
+    path('visualizar_voo/', views.visualizar_voo, name='visualizar_voo'),
+]

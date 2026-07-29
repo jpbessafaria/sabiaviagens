@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabiá Viagens - Meu Perfil Hotel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+         .header-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar {
+            background-color: #1a365d;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        .nav-item.active {
+            color: #d97706;
+            border-bottom: 2px solid #d97706;
+            padding-bottom: 2px;
+        }
+
+        .profile-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 24px;
+        }
+
+        .profile-sidebar {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            height: fit-content;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #fff7ed;
+            color: #f97316;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 16px auto;
+            border: 3px solid #f97316;
+        }
+
+        .profile-name {
+            font-size: 20px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .profile-email {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        .profile-menu {
+            list-style: none;
+            text-align: left;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 16px;
+        }
+
+        .profile-menu li {
+            margin-bottom: 8px;
+        }
+
+        .profile-menu a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .profile-menu a.active, .profile-menu a:hover {
+            background: #fff7ed;
+            color: #f97316;
+        }
+
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .card-panel {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            padding: 28px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .panel-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 12px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            padding: 12px 14px;
+            background: #f8fafc;
+            transition: border-color 0.2s;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: #f97316;
+            background: white;
+        }
+
+        .input-wrapper i {
+            color: #94a3b8;
+            margin-right: 12px;
+            font-size: 16px;
+        }
+
+        .input-wrapper input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        .btn-salvar {
+            background-color: #f97316;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 20px;
+        }
+
+        .btn-salvar:hover {
+            background-color: #ea580c;
+        }
+
+        .reservation-item {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .status-badge {
+            background-color: #dcfce7;
+            color: #15803d;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding-top: 50px;
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 40px;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .footer-col h4 {
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul li a:hover {
+            color: #f97316;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            background: #1e293b;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .social-icon:hover {
+            background: #f97316;
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: 12px;
+            font-size: 24px;
+            color: white;
+            margin-top: 12px;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #64748b;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        @media (max-width: 1024px) {
+            .profile-container {
+                grid-template-columns: 240px 1fr;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 20px;
+                text-align: center;
+            }
+
+            .user-actions {
+                gap: 15px;
+            }
+
+            .nav-bar {
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 10px 15px;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 20px;
+            }
+
+            .card-panel {
+                padding: 18px;
+            }
+
+            .btn-salvar {
+                width: 100%;
+            }
+
+            .reservation-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+          /* --- MENU SUSPENSO DO USUÁRIO --- */
+.user-menu {
+    position: relative;
+}
+
+.user-menu-trigger {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    min-width: 190px;
+    overflow: hidden;
+    z-index: 1100;
+}
+
+.user-dropdown.open {
+    display: block;
+}
+
+.user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: #333 !important;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.user-dropdown a i {
+    width: 16px;
+    color: #d97706;
+}
+
+.user-dropdown a:hover {
+    background-color: #fef3c7;
+    color: #92400e !important;
+}
+
+.user-dropdown .dropdown-divider {
+    border-top: 1px solid #e5e7eb;
+    margin: 4px 0;
+}
+
+.user-dropdown a.logout-link {
+    color: #dc2626 !important;
+}
+
+.user-dropdown a.logout-link i {
+    color: #dc2626;
+}
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="top-bar">
+            <div class="logo">
+                <i class="fa-solid fa-feather-pointed"></i> SABIÁ <span style="font-size: 12px; font-weight: normal;">VIAGENS</span>
+            </div>
+            <div class="user-actions">
+                {% if request.user.is_authenticated %}
+                    <div class="user-menu">
+                        <button type="button" class="user-menu-trigger" onclick="toggleUserMenu(this)">
+                            <i class="fa-regular fa-circle-user"></i> {{ request.user.first_name|default:request.user.username }} <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i>
+                        </button>
+                        <div class="user-dropdown">
+                            <a href="{% url 'perfilhotel' %}"><i class="fa-regular fa-id-card"></i> Dados pessoais</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{% url 'logout' %}" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Sair da conta</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}"><i class="fa-regular fa-user"></i> Fazer Login</a>
+                {% endif %}
+                <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+        </div>
+
+        <nav class="nav-bar">
+            <a href="{% url 'homeadmhotel' %}" class="nav-item"><i class="fa-solid fa-house"></i> Home</a>
+        </nav>
+    </div>
+
+    <div class="profile-container">
+        
+        <aside class="profile-sidebar">
+            <div class="profile-avatar">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <h3>{{ request.user.first_name|default:"Sem Nome Cadastrado" }}</h3>
+            <p>{{ request.user.email|default:"Sem E-mail Cadastrado." }}</p>
+
+            <ul class="profile-menu">
+                <li><a href="{% url 'logout' %}"><i class="fa-solid fa-right-from-bracket"></i> Sair da Conta</a></li>
+            </ul>
+        </aside>
+
+        <main class="profile-content">
+            
+            <section class="card-panel">
+                <h2 class="panel-title"><i class="fa-solid fa-user-pen"></i> Informações Pessoais</h2>
+                {% if messages %}
+                        {% for message in messages %}
+                            <div color="green" class="message {{ message.tags }}">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nome">Nome Completo</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-user"></i>
+                                <input type="text" id="nome" name="nome" value="{{ request.user.first_name }}" placeholder="Sem Nome Cadastrado">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-id-card"></i>
+                                <input type="text" id="cpf" name="cpf" value="{{ request.user.username }} " placeholder="Sem CPF Cadastrado">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-envelope"></i>
+                                <input type="email" id="email" name="email" value="{{ request.user.email }}" placeholder="Sem E-mail Cadastrado">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-salvar">Salvar Alterações</button>
+                </form>
+            </section>
+
+            <section class="card-panel">
+                <h2 class="panel-title"><i class="fa-solid fa-plane-departure"></i> Reservas Recentes</h2>
+
+                <div class="reservation-item">
+                    <div>
+                        <h4 style="font-size: 16px; color: #0f172a; font-weight: 700;">Voo: São Paulo (GRU) ➔ Cancún (CUN)</h4>
+                        <p style="font-size: 13px; color: #64748b; margin-top: 4px;">Data: 15/10/2026 | Passageiros: 2 Adultos</p>
+                    </div>
+                    <div>
+                        <span class="status-badge">Confirmado</span>
+                    </div>
+                </div>
+
+                <div class="reservation-item">
+                    <div>
+                        <h4 style="font-size: 16px; color: #0f172a; font-weight: 700;">Hotel: Ocean Resort & Beach Club</h4>
+                        <p style="font-size: 13px; color: #64748b; margin-top: 4px;">Salvador, BA | 4 Diárias (Café incluso)</p>
+                    </div>
+                    <div>
+                        <span class="status-badge">Confirmado</span>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col" style="grid-column: span 1.5;">
+                <div class="logo" style="margin-bottom: 16px;">
+                    <i class="fa-solid fa-feather-pointed"></i> SABIÁ VIAGENS
+                </div>
+                <p style="font-size: 13px; line-height: 1.6;">Sua agência completa para passagens aéreas, reservas de hotéis e pacotes turísticos com as melhores tarifas e segurança total na sua compra.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="passagens.html">Passagens Aéreas</a></li>
+                    <li><a href="hospedagens.html">Hotéis e Pousadas</a></li>
+                    <li><a href="promocoes.html">Ofertas e Promoções</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Atendimento</h4>
+                <ul>
+                    <li><a href="#">Central de Ajuda</a></li>
+                    <li><a href="#">Meus Pedidos</a></li>
+                    <li><a href="#">Políticas de Cancelamento</a></li>
+                    <li><a href="#">Termos e Condições</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Formas de Pagamento</h4>
+                <p style="font-size: 12px; margin-bottom: 8px;">Aceitamos os principais cartões e PIX:</p>
+                <div class="payment-methods">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-solid fa-pix"></i>
+                    <i class="fa-solid fa-barcode"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sabiá Viagens. Projeto Acadêmico IFTM. Todos os direitos reservados.</p>
+            <p><i class="fa-solid fa-lock"></i> Conexão Segura SSL 256-bit</p>
+        </div>
+    </footer>
+    <script>
+        // Abre/fecha o menu suspenso do usuário
+        function toggleUserMenu(btn) {
+            const dropdown = btn.nextElementSibling;
+            dropdown.classList.toggle('open');
+        }
+
+        // Fecha o menu suspenso ao clicar fora dele
+        document.addEventListener('click', function (event) {
+            document.querySelectorAll('.user-dropdown.open').forEach(function (dropdown) {
+                if (!dropdown.parentElement.contains(event.target)) {
+                    dropdown.classList.remove('open');
+                }
+            });
+        });
+
+        // Alterna a aba ativa (Ida e volta / Só ida / etc.)
+        document.querySelectorAll('.filter-tabs').forEach(function (tabGroup) {
+            tabGroup.querySelectorAll('.tab-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    tabGroup.querySelectorAll('.tab-btn').forEach(function (b) {
+                        b.classList.remove('active');
+                    });
+                    btn.classList.add('active');
+                });
+            });
+        });
+    </script>
+    {% if success %}
+        <script>
+            alert("{{ success }}");
+        </script>
+    {% endif %}
+
+    {% if error %}
+        <script>
+            alert("{{ error }}");
+        </script>
+    {% endif %}
+</body>
+</html>

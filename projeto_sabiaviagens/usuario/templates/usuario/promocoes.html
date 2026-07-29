@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabiá Viagens - Promoções</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: #333;
+        }
+
+        /* --- CABEÇALHO E MENU FIXO --- */
+        .header-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Topo Escuro */
+        .top-bar {
+            background-color: #1a365d;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Menu de Navegação */
+        .nav-bar {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-item.active {
+            color: #d97706;
+            border-bottom: 2px solid #d97706;
+            padding-bottom: 2px;
+        }
+
+        .nav-item:hover {
+            color: #d97706;
+        }
+
+        /* --- BLOCOS DA BUSCA / HEROFRAME --- */
+        .hero-section {
+            background-color: #486581;
+            color: white;
+            padding: 30px 5% 50px 5%;
+        }
+
+        .hero-section h1 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            background-color: #f9fafb;
+            border-radius: 12px;
+            padding: 20px;
+            color: #333;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            background-color: #e5e7eb;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        .tab-btn.active {
+            background-color: #fef3c7;
+            border: 1px solid #d97706;
+            color: #92400e;
+        }
+
+        .search-inputs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .input-group {
+            background: #e5e7eb;
+            border-radius: 8px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 140px;
+        }
+
+        .input-group input {
+            border: none;
+            background: transparent;
+            width: 100%;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .btn-buscar {
+            background-color: #ea580c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-buscar:hover {
+            background-color: #c2410c;
+        }
+
+        /* --- CARDS DE VIAGEM --- */
+        .cards-container {
+            padding: 40px 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header-img {
+            height: 140px;
+            background-image: url('https://images.unsplash.com/photo-1589909202802-8f4aadce1849?q=80&w=600');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            padding: 10px;
+        }
+
+        .badge-airline {
+            background-color: #ea580c;
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .badge-discount {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background-color: rgba(234, 179, 8, 0.9);
+            color: #78350f;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .card-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-type {
+            font-size: 12px;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1f2937;
+            margin: 4px 0;
+        }
+
+        .card-subtitle {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 12px;
+        }
+
+        .card-features {
+            list-style: none;
+            font-size: 12px;
+            color: #4b5563;
+            margin-bottom: 16px;
+        }
+
+        .card-features li {
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-features i {
+            color: #10b981;
+        }
+
+        .price-label {
+            font-size: 11px;
+            color: #6b7280;
+        }
+
+        .price-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .btn-compre {
+            margin-top: auto;
+            background-color: #ea580c;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: block;
+            transition: background 0.2s;
+        }
+
+        .btn-compre:hover {
+            background-color: #c2410c;
+        }
+
+        /* ==========================================================================
+   ESTILOS DO FOOTER (RODAPÉ)
+   ========================================================================== */
+
+footer {
+    background-color: #0f172a;
+    color: #94a3b8;
+    padding-top: 50px;
+    margin-top: 60px;
+    font-size: 14px;
+    line-height: 1.5;
+    width: 100%;
+}
+
+/* Grid Principal do Conteúdo */
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px 40px 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    border-bottom: 1px solid #1e293b;
+}
+
+/* Colunas do Rodapé */
+.footer-col h4 {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.footer-col ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footer-col ul li a:hover {
+    color: #f97316; /* Cor laranja de destaque */
+}
+
+/* Logo dentro do Footer */
+.footer-logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+}
+
+.footer-logo i {
+    color: #f97316;
+    font-size: 24px;
+}
+
+/* Redes Sociais */
+.social-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.social-icon {
+    width: 36px;
+    height: 36px;
+    background-color: #1e293b;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.social-icon:hover {
+    background-color: #f97316;
+    color: #ffffff;
+}
+
+/* Formas de Pagamento */
+.payment-methods {
+    display: flex;
+    gap: 12px;
+    font-size: 26px;
+    color: #ffffff;
+    margin-top: 12px;
+}
+
+/* Barra Inferior de Direitos Autorais */
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #64748b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.footer-bottom i {
+    color: #10b981; /* Ícone de cadeado verde */
+}
+@media (max-width: 1024px) {
+    .promo-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .promo-img {
+        width: 100%;
+        height: 220px;
+    }
+
+    .promo-price-box {
+        text-align: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .content-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .banners-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 20px;
+        text-align: center;
+    }
+
+    .user-actions {
+        gap: 15px;
+    }
+
+    .nav-bar {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 10px 15px;
+    }
+
+    .nav-item {
+        font-size: 14px;
+    }
+
+    .hero-section {
+        padding: 24px 16px 40px 16px;
+    }
+
+    .hero-title {
+        font-size: 24px;
+    }
+
+    .hero-subtitle {
+        font-size: 14px;
+    }
+
+    .search-box {
+        padding: 16px;
+    }
+
+    .filter-tabs {
+        justify-content: center;
+    }
+
+    .search-inputs {
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    .btn-buscar {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hotel-card {
+        flex-direction: column;
+    }
+
+    .hotel-img-wrapper {
+        width: 100%;
+        height: 200px;
+    }
+
+    .hotel-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .btn-hospede {
+        width: 100%;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 20px;
+    }
+
+    .cards-container {
+        padding: 20px 16px;
+        grid-template-columns: 1fr;
+    }
+
+    .promo-banner-container {
+        padding: 0 10px;
+    }
+
+    .promo-card {
+        padding: 16px;
+    }
+
+    .price-big {
+        font-size: 32px;
+    }
+
+    .auth-card, .login-card, .register-card {
+        padding: 24px 18px;
+    }
+}
+
+/* --- MENU SUSPENSO DO USUÁRIO --- */
+.user-menu {
+    position: relative;
+}
+
+.user-menu-trigger {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    min-width: 190px;
+    overflow: hidden;
+    z-index: 1100;
+}
+
+.user-dropdown.open {
+    display: block;
+}
+
+.user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: #333 !important;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.user-dropdown a i {
+    width: 16px;
+    color: #d97706;
+}
+
+.user-dropdown a:hover {
+    background-color: #fef3c7;
+    color: #92400e !important;
+}
+
+.user-dropdown .dropdown-divider {
+    border-top: 1px solid #e5e7eb;
+    margin: 4px 0;
+}
+
+.user-dropdown a.logout-link {
+    color: #dc2626 !important;
+}
+
+.user-dropdown a.logout-link i {
+    color: #dc2626;
+}
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="top-bar">
+            <div class="logo">
+                <i class="fa-solid fa-feather-pointed"></i> SABIÁ <span style="font-size: 12px; font-weight: normal;">VIAGENS</span>
+            </div>
+            <div class="user-actions">
+                {% if request.user.is_authenticated %}
+                    <div class="user-menu">
+                        <button type="button" class="user-menu-trigger" onclick="toggleUserMenu(this)">
+                            <i class="fa-regular fa-circle-user"></i> {{ request.user.first_name|default:request.user.username }} <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i>
+                        </button>
+                        <div class="user-dropdown">
+                            <a href="{% url 'perfil' %}"><i class="fa-regular fa-id-card"></i> Dados pessoais</a>
+                            <a href="#"><i class="fa-solid fa-suitcase-rolling"></i> Minhas reservas</a>
+                            <a href="#"><i class="fa-regular fa-heart"></i> Favoritos</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Sair da conta</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}"><i class="fa-regular fa-user"></i> Fazer Login</a>
+                {% endif %}
+                <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+        </div>
+
+        <nav class="nav-bar">
+            <a href="{% url 'home' %}" class="nav-item"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="{% url 'passagens' %}" class="nav-item"><i class="fa-solid fa-plane"></i> Passagens</a>
+            <a href="{% url 'hospedagens' %}" class="nav-item"><i class="fa-solid fa-bed"></i> Hospedagem</a>
+            <a href="{% url 'promocoes' %}" class="nav-item active"><i class="fa-solid fa-percent"></i> Promoções</a>
+        </nav>
+    </div>
+
+    <section class="hero-section">
+        <h1>Promoções</h1>
+        <div class="search-box">
+            <div class="filter-tabs">
+                <button class="tab-btn active">Ida e volta</button>
+                <button class="tab-btn">Só ida</button>
+                <button class="tab-btn">Vários destinos</button>
+                <button class="tab-btn">Voo + Hotel</button>
+            </div>
+
+            <form class="search-inputs">
+                <div class="input-group">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <input type="text" placeholder="Origem">
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                    <input type="text" placeholder="Destino">
+                </div>
+                <div class="input-group">
+                    <i class="fa-regular fa-calendar"></i>
+                    <input type="text" placeholder="Ida">
+                </div>
+                <div class="input-group">
+                    <i class="fa-regular fa-calendar"></i>
+                    <input type="text" placeholder="Volta">
+                </div>
+                <div class="input-group">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" value="Viajantes 1">
+                </div>
+                <button type="button" class="btn-buscar">
+                    Buscar <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <main class="cards-container">
+        
+        <div class="card">
+            <div class="card-header-img">
+                <span class="badge-airline">Voando Turkish</span>
+                <span class="badge-discount">Voo direto! Até 40% de desconto!</span>
+            </div>
+            <div class="card-body">
+                <span class="card-type"><i class="fa-solid fa-plane"></i> Aéreo</span>
+                <h3 class="card-title">Buenos Aires</h3>
+                <p class="card-subtitle">Saindo de São Paulo</p>
+                <ul class="card-features">
+                    <li><i class="fa-solid fa-check"></i> Aéreo ida e volta</li>
+                    <li><i class="fa-solid fa-check"></i> Saída 15/08/2025</li>
+                    <li><i class="fa-solid fa-check"></i> Bagagem despachada inclusa</li>
+                </ul>
+                <p class="price-label">a partir de</p>
+                <p class="price-value">R$ 618 <span style="font-size: 11px; font-weight: normal;">Por pessoa</span></p>
+                <a href="#" class="btn-compre">Compre no Site</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header-img">
+                <span class="badge-airline">Voando Turkish</span>
+                <span class="badge-discount">Voo direto! Até 40% de desconto!</span>
+            </div>
+            <div class="card-body">
+                <span class="card-type"><i class="fa-solid fa-plane"></i> Aéreo</span>
+                <h3 class="card-title">Buenos Aires</h3>
+                <p class="card-subtitle">Saindo de São Paulo</p>
+                <ul class="card-features">
+                    <li><i class="fa-solid fa-check"></i> Aéreo ida e volta</li>
+                    <li><i class="fa-solid fa-check"></i> Saída 15/08/2025</li>
+                    <li><i class="fa-solid fa-check"></i> Bagagem despachada inclusa</li>
+                </ul>
+                <p class="price-label">a partir de</p>
+                <p class="price-value">R$ 618 <span style="font-size: 11px; font-weight: normal;">Por pessoa</span></p>
+                <a href="#" class="btn-compre">Compre no Site</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header-img">
+                <span class="badge-airline">Voando Turkish</span>
+                <span class="badge-discount">Voo direto! Até 40% de desconto!</span>
+            </div>
+            <div class="card-body">
+                <span class="card-type"><i class="fa-solid fa-plane"></i> Aéreo</span>
+                <h3 class="card-title">Buenos Aires</h3>
+                <p class="card-subtitle">Saindo de São Paulo</p>
+                <ul class="card-features">
+                    <li><i class="fa-solid fa-check"></i> Aéreo ida e volta</li>
+                    <li><i class="fa-solid fa-check"></i> Saída 15/08/2025</li>
+                    <li><i class="fa-solid fa-check"></i> Bagagem despachada inclusa</li>
+                </ul>
+                <p class="price-label">a partir de</p>
+                <p class="price-value">R$ 618 <span style="font-size: 11px; font-weight: normal;">Por pessoa</span></p>
+                <a href="#" class="btn-compre">Compre no Site</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header-img">
+                <span class="badge-airline">Voando Turkish</span>
+                <span class="badge-discount">Voo direto! Até 40% de desconto!</span>
+            </div>
+            <div class="card-body">
+                <span class="card-type"><i class="fa-solid fa-plane"></i> Aéreo</span>
+                <h3 class="card-title">Buenos Aires</h3>
+                <p class="card-subtitle">Saindo de São Paulo</p>
+                <ul class="card-features">
+                    <li><i class="fa-solid fa-check"></i> Aéreo ida e volta</li>
+                    <li><i class="fa-solid fa-check"></i> Saída 15/08/2025</li>
+                    <li><i class="fa-solid fa-check"></i> Bagagem despachada inclusa</li>
+                </ul>
+                <p class="price-label">a partir de</p>
+                <p class="price-value">R$ 618 <span style="font-size: 11px; font-weight: normal;">Por pessoa</span></p>
+                <a href="#" class="btn-compre">Compre no Site</a>
+            </div>
+        </div>
+
+    </main>
+
+        <footer>
+        <div class="footer-content">
+            <div class="footer-col" style="grid-column: span 1.5;">
+                <div class="logo" style="margin-bottom: 16px;">
+                    <i class="fa-solid fa-feather-pointed"></i> SABIÁ VIAGENS
+                </div>
+                <p style="font-size: 13px; line-height: 1.6;">Sua agência completa para passagens aéreas, reservas de hotéis e pacotes turísticos com as melhores tarifas e segurança total na sua compra.</p>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="passagens.html">Passagens Aéreas</a></li>
+                    <li><a href="hospedagens.html">Hotéis e Pousadas</a></li>
+                    <li><a href="promocoes.html">Ofertas e Promoções</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Atendimento</h4>
+                <ul>
+                    <li><a href="#">Central de Ajuda</a></li>
+                    <li><a href="#">Meus Pedidos</a></li>
+                    <li><a href="#">Políticas de Cancelamento</a></li>
+                    <li><a href="#">Termos e Condições</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Formas de Pagamento</h4>
+                <p style="font-size: 12px; margin-bottom: 8px;">Aceitamos os principais cartões e PIX:</p>
+                <div class="payment-methods">
+                    <i class="fa-brands fa-cc-visa"></i>
+                    <i class="fa-brands fa-cc-mastercard"></i>
+                    <i class="fa-solid fa-pix"></i>
+                    <i class="fa-solid fa-barcode"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sabiá Viagens. Projeto Acadêmico IFTM. Todos os direitos reservados.</p>
+            <p><i class="fa-solid fa-lock"></i> Conexão Segura SSL 256-bit</p>
+        </div>
+    </footer>
+
+    <script>
+        // Abre/fecha o menu suspenso do usuário
+        function toggleUserMenu(btn) {
+            const dropdown = btn.nextElementSibling;
+            dropdown.classList.toggle('open');
+        }
+
+        // Fecha o menu suspenso ao clicar fora dele
+        document.addEventListener('click', function (event) {
+            document.querySelectorAll('.user-dropdown.open').forEach(function (dropdown) {
+                if (!dropdown.parentElement.contains(event.target)) {
+                    dropdown.classList.remove('open');
+                }
+            });
+        });
+
+        // Alterna a aba ativa (Ida e volta / Só ida / etc.)
+        document.querySelectorAll('.filter-tabs').forEach(function (tabGroup) {
+            tabGroup.querySelectorAll('.tab-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    tabGroup.querySelectorAll('.tab-btn').forEach(function (b) {
+                        b.classList.remove('active');
+                    });
+                    btn.classList.add('active');
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

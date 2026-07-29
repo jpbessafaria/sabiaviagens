@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabiá Viagens - Painel Administrativo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .header-container {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar {
+            background-color: #1a365d;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 5%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-actions a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-bar {
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+        }
+
+        .nav-item.active {
+            color: #d97706;
+            border-bottom: 2px solid #d97706;
+            padding-bottom: 2px;
+        }
+
+        .hero-section {
+            background-color: #486581;
+            padding: 35px 5% 45px 5%;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .hero-section p {
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+
+        .admin-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .admin-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        .admin-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .admin-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background-color: #fef3c7;
+            color: #d97706;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1a365d;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #6b7280;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background-color: #ea580c;
+            color: white;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #c2410c;
+        }
+
+        .btn-secondary {
+            background-color: #1a365d;
+            color: white;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            background-color: #0f2342;
+        }
+
+        footer {
+            background-color: #1a365d;
+            color: white;
+            padding-top: 40px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5% 30px 5%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .footer-col h4 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #facc15;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-col ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-col ul li a:hover {
+            color: #ea580c;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 5%;
+            text-align: center;
+            font-size: 13px;
+            color: #cbd5e1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .nav-bar {
+                gap: 15px;
+                padding: 10px 15px;
+            }
+            .top-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        /* --- MENU SUSPENSO DO USUÁRIO --- */
+.user-menu {
+    position: relative;
+}
+
+.user-menu-trigger {
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    min-width: 190px;
+    overflow: hidden;
+    z-index: 1100;
+}
+
+.user-dropdown.open {
+    display: block;
+}
+
+.user-dropdown a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    color: #333 !important;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.user-dropdown a i {
+    width: 16px;
+    color: #d97706;
+}
+
+.user-dropdown a:hover {
+    background-color: #fef3c7;
+    color: #92400e !important;
+}
+
+.user-dropdown .dropdown-divider {
+    border-top: 1px solid #e5e7eb;
+    margin: 4px 0;
+}
+
+.user-dropdown a.logout-link {
+    color: #dc2626 !important;
+}
+
+.user-dropdown a.logout-link i {
+    color: #dc2626;
+}
+    </style>
+</head>
+<body>
+
+    <div class="header-container">
+        <div class="top-bar">
+            <a href="{% url 'homeadm' %}" class="logo">
+                <i class="fa-solid fa-feather-pointed"></i> SABIÁ <span style="font-size: 12px; font-weight: normal;">VIAGENS</span>
+            </a>
+            <div class="user-actions">
+                {% if request.user.is_authenticated %}
+                    <div class="user-menu">
+                        <button type="button" class="user-menu-trigger" onclick="toggleUserMenu(this)">
+                            <i class="fa-regular fa-circle-user"></i> {{ request.user.first_name|default:request.user.username }} <i class="fa-solid fa-chevron-down" style="font-size: 11px;"></i>
+                        </button>
+                        <div class="user-dropdown">
+                            <a href="{% url 'perfilgeral' %}"><i class="fa-regular fa-id-card"></i> Dados pessoais</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{% url 'logout' %}" class="logout-link"><i class="fa-solid fa-right-from-bracket"></i> Sair da conta</a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}"><i class="fa-regular fa-user"></i> Fazer Login</a>
+                {% endif %}
+                <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
+            </div>
+        </div>
+
+        <nav class="nav-bar">
+            <a href="{% url 'homeadm' %}" class="nav-item active"><i class="fa-solid fa-house"></i> Home</a>
+        </nav>
+    </div>
+
+    <section class="hero-section">
+        <h1>Painel Administrativo</h1>
+    </section>
+
+    <div class="admin-container">
+        <div class="admin-grid">
+
+            <div class="admin-card">
+                <div class="card-icon">
+                    <i class="fa-solid fa-hotel"></i>
+                </div>
+                <h3 class="card-title">Hotéis</h3>
+                <p class="card-desc">Gerencie os hotéis e redes hoteleiras cadastradas no sistema</p>
+                <div class="card-actions">
+                    <a href="{% url 'cadastro_hotel' %}" class="btn-primary"><i class="fa-solid fa-plus-circle"></i> Cadastrar Hotel</a>
+                    <a href="{% url 'visualizar_hotel' %}" class="btn-secondary"><i class="fa-solid fa-eye"></i> Visualizar Hotéis</a>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-icon">
+                    <i class="fa-solid fa-building"></i>
+                </div>
+                <h3 class="card-title">Companhias</h3>
+                <p class="card-desc">Cadastre e liste as companhias aéreas parceiras</p>
+                <div class="card-actions">
+                    <a href="{% url 'cadastro_companhia' %}" class="btn-primary"><i class="fa-solid fa-plus-circle"></i> Cadastrar Companhia</a>
+                    <a href="{% url 'visualizar_companhia' %}" class="btn-secondary"><i class="fa-solid fa-eye"></i> Visualizar Companhias</a>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-icon">
+                    <i class="fa-solid fa-city"></i>
+                </div>
+                <h3 class="card-title">Cidades</h3>
+                <p class="card-desc">Gerencie os destinos e cidades atendidas pela plataforma</p>
+                <div class="card-actions">
+                    <a href="{% url 'cadastro_cidades' %}" class="btn-primary"><i class="fa-solid fa-plus-circle"></i> Cadastrar Cidade</a>
+                    <a href="{% url 'visualizar_cidades' %}" class="btn-secondary"><i class="fa-solid fa-eye"></i> Visualizar Cidades</a>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <div class="card-icon">
+                    <i class="fa-solid fa-plane-arrival"></i>
+                </div>
+                <h3 class="card-title">Aeroportos</h3>
+                <p class="card-desc">Controle os aeroportos de origem e destino dos voos</p>
+                <div class="card-actions">
+                    <a href="{% url 'cadastro_aeroportos' %}" class="btn-primary"><i class="fa-solid fa-plus-circle"></i> Cadastrar Aeroporto</a>
+                    <a href="{% url 'visualizar_aeroportos' %}" class="btn-secondary"><i class="fa-solid fa-eye"></i> Visualizar Aeroportos</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col">
+                <div class="logo" style="margin-bottom: 12px; font-size: 20px;">
+                    <i class="fa-solid fa-feather-pointed"></i> SABIÁ VIAGENS
+                </div>
+                <p style="font-size: 13px; color: #cbd5e1;">Sua plataforma completa para reservas de passagens e hospedagens.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="passagens.html">Passagens Aéreas</a></li>
+                    <li><a href="hospedagens.html">Hotéis e Hospedagens</a></li>
+                    <li><a href="promocoes.html">Promoções</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>Atendimento</h4>
+                <ul>
+                    <li><a href="#">Central de Ajuda</a></li>
+                    <li><a href="#">Meus Pedidos</a></li>
+                    <li><a href="#">Termos e Condições</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 Sabiá Viagens. Projeto Acadêmico IFTM. Todos os direitos reservados.</p>
+            <p><i class="fa-solid fa-lock"></i> Conexão Segura SSL 256-bit</p>
+        </div>
+    </footer>
+    <script>
+        // Abre/fecha o menu suspenso do usuário
+        function toggleUserMenu(btn) {
+            const dropdown = btn.nextElementSibling;
+            dropdown.classList.toggle('open');
+        }
+
+        // Fecha o menu suspenso ao clicar fora dele
+        document.addEventListener('click', function (event) {
+            document.querySelectorAll('.user-dropdown.open').forEach(function (dropdown) {
+                if (!dropdown.parentElement.contains(event.target)) {
+                    dropdown.classList.remove('open');
+                }
+            });
+        });
+
+        // Alterna a aba ativa (Ida e volta / Só ida / etc.)
+        document.querySelectorAll('.filter-tabs').forEach(function (tabGroup) {
+            tabGroup.querySelectorAll('.tab-btn').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    tabGroup.querySelectorAll('.tab-btn').forEach(function (b) {
+                        b.classList.remove('active');
+                    });
+                    btn.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

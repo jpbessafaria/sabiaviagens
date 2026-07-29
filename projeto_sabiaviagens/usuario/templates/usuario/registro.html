@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabiá Viagens - Criar Conta</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #1a365d;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .register-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a365d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 4px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            padding: 10px 12px;
+            background: #f9fafb;
+        }
+
+        .input-wrapper i {
+            color: #9ca3af;
+            margin-right: 10px;
+        }
+
+        .input-wrapper input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .btn-register {
+            width: 100%;
+            background-color: #ea580c;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-register:hover {
+            background-color: #c2410c;
+        }
+
+        .footer-links {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .footer-links a {
+            color: #d97706;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 1024px) {
+    .promo-card {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .promo-img {
+        width: 100%;
+        height: 220px;
+    }
+
+    .promo-price-box {
+        text-align: center;
+        align-items: center;
+        width: 100%;
+    }
+
+    .content-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .banners-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .top-bar {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px 20px;
+        text-align: center;
+    }
+
+    .user-actions {
+        gap: 15px;
+    }
+
+    .nav-bar {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 10px 15px;
+    }
+
+    .nav-item {
+        font-size: 14px;
+    }
+
+    .hero-section {
+        padding: 24px 16px 40px 16px;
+    }
+
+    .hero-title {
+        font-size: 24px;
+    }
+
+    .hero-subtitle {
+        font-size: 14px;
+    }
+
+    .search-box {
+        padding: 16px;
+    }
+
+    .filter-tabs {
+        justify-content: center;
+    }
+
+    .search-inputs {
+        flex-direction: column;
+    }
+
+    .input-group {
+        width: 100%;
+    }
+
+    .btn-buscar {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .hotel-card {
+        flex-direction: column;
+    }
+
+    .hotel-img-wrapper {
+        width: 100%;
+        height: 200px;
+    }
+
+    .hotel-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .btn-hospede {
+        width: 100%;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 20px;
+    }
+
+    .cards-container {
+        padding: 20px 16px;
+        grid-template-columns: 1fr;
+    }
+
+    .promo-banner-container {
+        padding: 0 10px;
+    }
+
+    .promo-card {
+        padding: 16px;
+    }
+
+    .price-big {
+        font-size: 32px;
+    }
+
+    .auth-card, .login-card, .register-card {
+        padding: 24px 18px;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <div class="register-card">
+        <div class="logo">
+            <i class="fa-solid fa-feather-pointed"></i> SABIÁ VIAGENS
+        </div>
+
+        <form action="{% url 'registro' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="nome">Nome Completo</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome completo">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="cpf">CPF</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-id-card"></i>
+                    <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-envelope"></i>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="senha">Senha</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" id="senha" name="senha" placeholder="••••••••">
+                </div>
+            </div>
+
+            <input type="submit" class="btn-register" value="Criar Conta">
+        </form>
+
+        <div class="footer-links">
+            <p>Já possui uma conta? <a href="{% url 'login' %}">Faça Login</a></p>
+        </div>
+    </div>
+    {% if success %}
+        <script>
+            alert("{{ success }}");
+        </script>
+    {% endif %}
+
+    {% if error %}
+        <script>
+            alert("{{ error }}");
+        </script>
+    {% endif %}
+
+</body>
+</html>
