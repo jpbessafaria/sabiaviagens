@@ -21,7 +21,7 @@ def home(request):
         'is_adm_hotel': is_adm_hotel,
         'is_adm_pass': is_adm_pass,
     }
-    return render(request, 'usuario/home.html', context)
+    return render(request, 'usuario/index.html', context)
 
 def login(request):
     if request.method == 'POST':
@@ -35,11 +35,11 @@ def login(request):
             if user.groups.filter(name='adm_geral').exists():
                 return render(request, 'adm_geral/home_adm.html')
             elif user.groups.filter(name='adm_hotel').exists():
-                return render(request, 'adm_hotel/home.html', {'success': 'Login realizado com sucesso'})
+                return render(request, 'adm_hotel/index.html', {'success': 'Login realizado com sucesso'})
             elif user.groups.filter(name='adm_pass').exists():
-                return render(request, 'adm_pass/home.html', {'success': 'Login realizado com sucesso'})  
+                return render(request, 'adm_pass/index.html', {'success': 'Login realizado com sucesso'})  
             else:
-                return render(request, 'usuario/home.html', {'success': 'Login realizado com sucesso'})          
+                return render(request, 'usuario/index.html', {'success': 'Login realizado com sucesso'})          
         else:
             return render(request, 'usuario/login.html', {'error': 'Usuário ou senha inválidos'})
     else:
@@ -142,7 +142,7 @@ def perfilvoo(request):
         if request.user.is_authenticated and (request.user.groups.filter(name='adm_pass').exists()):
             return render(request, 'adm_voo/perfil_voo.html')
         else:
-            return render(request, 'usuario/home.html', {'error': 'Você precisa ter permissão para acessar o perfil de voo'})
+            return render(request, 'usuario/index.html', {'error': 'Você precisa ter permissão para acessar o perfil de voo'})
 
 def perfilhotel(request):
     if request.method == 'POST':
@@ -153,12 +153,12 @@ def perfilhotel(request):
         usuario.email = request.POST.get('email')
         usuario.save()  
         messages.success(request, 'Perfil atualizado com sucesso!')
-        return redirect('perfil')
+        return redirect('perfilhotel')
     else: 
         if request.user.is_authenticated and (request.user.groups.filter(name='adm_hotel').exists()):
             return render(request, 'adm_hotel/perfil_hotel.html')
         else:
-            return render(request, 'usuario/home.html', {'error': 'Você precisa ter permissão para acessar o perfil de hotel'})
+            return render(request, 'usuario/index.html', {'error': 'Você precisa ter permissão para acessar o perfil de hotel'})
 
 def perfilgeral(request):
     if request.method == 'POST':
@@ -174,7 +174,7 @@ def perfilgeral(request):
         if request.user.is_authenticated and (request.user.groups.filter(name='adm_geral').exists()):
             return render(request, 'adm_geral/perfil_geral.html')
         else:
-            return render(request, 'usuario/home.html', {'error': 'Você precisa ter permissão para acessar o perfil de administração geral'})
+            return render(request, 'usuario/index.html', {'error': 'Você precisa ter permissão para acessar o perfil de administração geral'})
 
 def cadastro_hotel(request):
     if request.method == 'POST':
@@ -387,25 +387,25 @@ def cadastro_aeroportos(request):
 def logout(request):
     from django.contrib.auth import logout as dlogout
     dlogout(request)
-    return render(request, 'usuario/home.html', {'success': 'Logout realizado com sucesso'})
+    return render(request, 'usuario/index.html', {'success': 'Logout realizado com sucesso'})
 
 def homeadm(request):
     if request.user.is_authenticated and (request.user.groups.filter(name='adm_geral').exists()):
         return render(request, 'adm_geral/home_adm.html')
     else:
-        return render(request, 'usuario/home.html', {'error': 'Você precisa ter permissão para acessar a página de administração'})
+        return render(request, 'usuario/index.html', {'error': 'Você precisa ter permissão para acessar a página de administração'})
 
 def homeadmhotel(request):
     if request.user.is_authenticated and (request.user.groups.filter(name='adm_hotel').exists()):
         return render(request, 'adm_hotel/home_adm_hotel.html')
     else:
-        return render(request, 'usuario/home.html', {'error': 'Você precisa ter permissão para acessar a página de administração de hotéis'})
+        return render(request, 'usuario/index.html', {'error': 'Você precisa ter permissão para acessar a página de administração de hotéis'})
 
 def homeadmvoo(request):
     if request.user.is_authenticated and (request.user.groups.filter(name='adm_pass').exists()):
         return render(request, 'adm_voo/home_adm_voo.html')
     else:
-        return render(request, 'usuario/home.html', {'error': 'Você precisa ter permissão para acessar a página de administração de voos'})
+        return render(request, 'usuario/index.html', {'error': 'Você precisa ter permissão para acessar a página de administração de voos'})
 
 def visualizar_hotel(request):
     if request.method == 'POST':
