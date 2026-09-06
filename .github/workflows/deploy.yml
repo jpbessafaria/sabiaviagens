@@ -22,3 +22,4 @@ jobs:
         password: ${{ secrets.PASS }}
         localDir: "."             # Envia a raiz do seu projeto Django
         remoteDir: "public_html/" # Pasta padrão da sua aplicação na Locaweb
+        forceSsl: false
