@@ -77,7 +77,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'bessa_db',
-        'USER': 'jpbessafaria',
+        'USER': 'bessa_db',
         'PASSWORD': 'Nick@1031',
         'HOST': 'bessa_db.mysql.dbaas.com.br',
         'PORT': '3306',
