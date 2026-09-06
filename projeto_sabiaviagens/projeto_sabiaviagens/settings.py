@@ -75,10 +75,15 @@ WSGI_APPLICATION = 'projeto_sabiaviagens.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'bessa_db',
+        'USER': 'jpbessafaria',
+        'PASSWORD': 'Nick@1031',
+        'HOST': 'bessa_db.mysql.dbaas.com.br',
+        'PORT': '3306',
     }
 }
+
 
 
 # Password validation
