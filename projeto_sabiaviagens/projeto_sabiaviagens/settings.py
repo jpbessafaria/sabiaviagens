@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-pwx69ns7$98d&&$$$cm1)nj(b_wm%0gy1=@td$&&*$25dn65c5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['bessa.tecnologia.ws','://bessa.tecnologia.ws', '*']
+ALLOWED_HOSTS = ['bessa.tecnologia.ws','*']
 
 
 # Application definition
