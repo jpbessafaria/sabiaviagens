@@ -1,0 +1,10 @@
+Options +FollowSymLinks
+RewriteEngine On
+
+# Impede que o Apache tente ler subpastas como se fossem comandos do servidor
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Encaminha todo o tráfego para o arquivo que configuramos no Passo 1
+RewriteRule ^(.*)$ passenger_wsgi.py/$1 [QSA,PT,L]
+
